@@ -40,23 +40,25 @@ class SpscQueue {
 public:
     bool push(const Item& item) {
         std::lock_guard<Lock> guard(lock_);
-        if (tail_ - head_ == Capacity) {
+        if (size_ == Capacity) {
             return false;
         }
 
         items_[tail_ % Capacity] = item;
         ++tail_;
+        ++size_;
         return true;
     }
 
     bool pop(Item& item) {
         std::lock_guard<Lock> guard(lock_);
-        if (head_ == tail_) {
+        if (size_ == 0) {
             return false;
         }
 
         item = items_[head_ % Capacity];
         ++head_;
+        --size_;
         return true;
     }
 
@@ -64,5 +66,6 @@ private:
     Lock lock_;
     alignas(64) std::size_t head_ = 0;
     alignas(64) std::size_t tail_ = 0;
+    alignas(64) std::size_t size_ = 0;
     ItemPool<Capacity> items_;
 };
