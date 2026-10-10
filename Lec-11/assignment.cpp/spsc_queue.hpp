@@ -25,6 +25,7 @@ public:
     }
 
     void unlock() {
+        // Release publishes queue updates before another thread acquires the lock.
         flag_.clear(std::memory_order_release);
     }
 
