@@ -1,14 +1,11 @@
 #pragma once
 
-#include <array>
 #include <atomic>
 #include <cstddef>
 #include <mutex>
 #include <thread>
 
-struct alignas(64) Item {
-    std::byte data[64];
-};
+#include "item_pool.hpp"
 
 class MutexLock {
 public:
@@ -66,5 +63,5 @@ private:
     Lock lock_;
     alignas(64) std::size_t head_ = 0;
     alignas(64) std::size_t tail_ = 0;
-    std::array<Item, Capacity> items_{};
+    ItemPool<Capacity> items_;
 };
