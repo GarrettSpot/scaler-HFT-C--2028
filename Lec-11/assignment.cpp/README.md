@@ -1,5 +1,8 @@
 # Lock-based SPSC queue benchmark
 
+## email: adam.24bcs10017@sst.scaler.com
+## roll_no: 24bcs10017
+
 The Lec-11 assignment implements a bounded, single-producer/single-consumer ring
 queue for 64-byte `Item`s. Queue slots come from one contiguous, 64-byte-aligned
 `ItemPool` allocation made when the queue is constructed, so `push` and `pop`
